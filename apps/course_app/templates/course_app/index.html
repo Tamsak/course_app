@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'course_app/style.css' %}"/>
+    <title>Courses</title>
+</head>
+<body>
+    <h1>Add a new course</h1>
+    {% if messages %}
+        {% for message in messages %}
+        <p>{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+    <ul>
+    <form action="/add"  method="post">
+        {% csrf_token %} 
+        <li>Name:<input type="text" name="name"></li>
+        Description: <li><textarea name="desc"></textarea></li>
+        <li><input type="submit" value="add"></li>
+    </form>
+    </ul>
+    <h1>Courses</h1>
+    <table>
+        <tr>
+            <th>Course Name</th>
+            <th>Description</th>
+            <th>Date Added</th>
+            <th>Action</th>
+        </tr>
+    {% for course in courses %}
+        <tr>
+            <td>{{course.name}} {{course.id}}</td>
+            <td>{{course.desc}}</td>
+            <td>{{course.created_at}}</td>
+            <td><a href="{{course.id}}/remove">Remove</td>
+        </tr>
+    {% endfor %}
+    </table>
+</body>
+</html>

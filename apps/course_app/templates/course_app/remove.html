@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'course_app/style.css' %}"/>
+    <title>Courses</title>
+</head>
+<body>
+    <h1>Add a new course</h1>
+    {% if messages %}
+        {% for message in messages %}
+        <p>{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+    <ul>
+    <form action="/add"  method="post">
+        {% csrf_token %} 
+        <li>Name:<input type="text" name="name"></li>
+        Description: <li><textarea name="desc"></textarea></li>
+        <li><input type="submit" value="add"></li>
+    </form>
+    </ul>
+    <h1>Are you sure you want to delete the follwoing course?</h1>
+    {% for course in courses %}
+        Name:{{course.name}}
+        Description: {{course.desc}}
+        <form action='delete' method='post'>
+            {% csrf_token %} 
+            <input type='submit' name='answer' value='No'>
+            <input type='submit' name='answer' value='Yes! I want to delete this'>
+        </form>
+    {% endfor %}
+</body>
+</html>
